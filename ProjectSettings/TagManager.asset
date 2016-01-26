@@ -3,7 +3,14 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - Item
+  - UI
+  - Item Database
+  - Item Name
+  - Item Description
+  - Item Type
+  - Item Information
   layers:
   - Default
   - TransparentFX
