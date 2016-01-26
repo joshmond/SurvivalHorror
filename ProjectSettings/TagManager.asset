@@ -11,6 +11,7 @@ TagManager:
   - Item Description
   - Item Type
   - Item Information
+  - Light
   layers:
   - Default
   - TransparentFX

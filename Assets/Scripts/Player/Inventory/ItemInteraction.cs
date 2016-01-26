@@ -12,11 +12,13 @@ public class ItemInteraction : MonoBehaviour
 	private Text message;
 	private PlayerInventory inventory;
 	private bool hasPickedUp;
+	private Brightness brightness;
 
 	void Awake()
 	{
 		message = GameObject.FindGameObjectWithTag ("UI").transform.GetChild(0).GetComponent<Text> ();
 		inventory = GameObject.FindGameObjectWithTag ("UI").transform.GetChild (1).GetComponent<PlayerInventory> ();
+		brightness = GameObject.FindGameObjectWithTag ("Light").GetComponent<Brightness> ();
 	}
 	
 	void Start () 
@@ -30,25 +32,18 @@ public class ItemInteraction : MonoBehaviour
 
 	void Update () 
 	{
-		if(!hasPickedUp)
+		if(brightness.isOn)
 		{
-			if(Vector3.Distance(transform.position, item.transform.position) < distance)
+			if(item != null)
 			{
-				inRange = true;
-				hasPickedUp = false;
-
-				ShowMessage();
-				
-				if(Input.GetButtonDown("Pickup") && inRange)
-				{
-					PickUpItem(0);
-					message.text = "";
-				}
+				item.SetActive(true);
+				Interact();
 			}
-			else
-			{
-				message.text = "";
-			}
+		}
+		else
+		{
+			item.SetActive(false);
+			message.text = "";
 		}
 
 	}
@@ -67,5 +62,28 @@ public class ItemInteraction : MonoBehaviour
 		Destroy (item.gameObject);
 		hasPickedUp = true;
 	}
-	
+
+	private void Interact()
+	{
+		if(!hasPickedUp)
+		{
+			if(Vector3.Distance(transform.position, item.transform.position) < distance)
+			{
+				inRange = true;
+				hasPickedUp = false;
+				
+				ShowMessage();
+				
+				if(Input.GetButtonDown("Pickup") && inRange)
+				{
+					PickUpItem(3);
+					message.text = "";
+				}
+			}
+			else
+			{
+				message.text = "";
+			}
+		}
+	}
 }
